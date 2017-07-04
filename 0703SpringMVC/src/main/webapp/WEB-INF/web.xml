@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- 모든 곳에서 사용할 수 있는 bean을 설정하는 파일의 경로 설정 - root-context.xml -->
+	<!-- context-param이 없으면 WEB-INF 디렉토리의 applicationContext.xml 파일이 설정 파일이 
+		됨 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- 요청 정보를 처리할 서블릿 설정 파일의 경로를 설정 - servlet-context.xml -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<!-- 서블릿 이름과 주소 패턴 설정 -->
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<!-- .jsp를 제외한 모든 요청 처리 -->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!-- 파라미터 인코딩 설정 * 파라미터 시 한글이 깨지지 않도록! -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+</web-app>
